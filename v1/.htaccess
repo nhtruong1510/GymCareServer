@@ -1,0 +1,69 @@
+php_flag display_errors on
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+
+RewriteRule ^foods/([0-9]+)$ controller/food.php?foodid=$1 [QSA]
+RewriteRule ^foods/page/([0-9]+)$ controller/food.php?page=$1 [QSA]
+RewriteRule ^foods/search$ controller/food.php [QSA]
+RewriteRule ^foods$ controller/food.php [L]
+
+RewriteRule ^stores/([0-9]+)$ controller/store.php?storeid=$1 [QSA]
+RewriteRule ^stores/page/([0-9]+)$ controller/store.php?page=$1 [QSA]
+RewriteRule ^stores/search$ controller/store.php [QSA]
+RewriteRule ^stores$ controller/store.php [QSA]
+
+RewriteRule ^categories$ controller/category.php [L]
+RewriteRule ^category/([0-9]+)$ controller/categorystore.php?storeid=$1 [L]
+
+RewriteRule ^store/([0-9]+)$ controller/detail_store.php?storeid=$1 [L]
+RewriteRule ^update_store$ controller/update_store.php [QSA]
+
+RewriteRule ^totalfavoritestore/([0-9]+)$ controller/total_favorite_store.php?storeid=$1 [L]
+RewriteRule ^totalfavoritestore/([0-9]+)/([0-9]+)$ controller/total_favorite_store.php?storeid=$1&userid=$2 [L]
+RewriteRule ^totalfavoritestore$ controller/total_favorite_store.php [L]
+
+RewriteRule ^food/([0-9]+)$ controller/detail_food.php?foodid=$1 [L]
+
+RewriteRule ^favoritestore/([0-9]+)$ controller/favorite_store.php?userid=$1 [L]
+
+RewriteRule ^cart/([0-9]+)/([0-9]+)$ controller/cart.php?storeid=$1&cartid=$2 [L]
+RewriteRule ^cartstore$ controller/cartstore.php? [QSA]
+RewriteRule ^cart$ controller/cart.php [L]
+RewriteRule ^topping$ controller/topping.php [L]
+
+RewriteRule ^myorder/([0-9]+)$ controller/myorder.php?cartid=$1 [L]
+RewriteRule ^order/([0-9]+)$ controller/order.php?userid=$1 [L]
+RewriteRule ^order$ controller/order.php [L]
+RewriteRule ^orderdetail$ controller/orderdetail.php [L]
+RewriteRule ^orderdetail/([0-9]+)$ controller/orderdetail.php?orderid=$1 [L]
+
+RewriteRule ^delivering/([0-9]+)/([0-9]+)$ controller/delivering.php?userid=$1&cartid=$2 [L]
+RewriteRule ^delivering/page/([0-9]+)$ controller/delivering.php?page=$1 [QSA]
+
+RewriteRule ^received/page/([0-9]+)$ controller/order_received.php?page=$1 [QSA]
+RewriteRule ^received$ controller/order_received.php [QSA]
+
+RewriteRule ^statistical$ controller/statistical.php [QSA]
+RewriteRule ^statis_rate$ controller/statistical_rate.php [QSA]
+
+RewriteRule ^history$ controller/order_history.php [QSA]
+
+RewriteRule ^map$ controller/map.php [QSA]
+
+RewriteRule ^promo/page/([0-9]+)$ controller/promotion.php?page=$1 [QSA]
+RewriteRule ^promo$ controller/promotion.php? [QSA]
+RewriteRule ^review/page/([0-9]+)$ controller/review.php?page=$1 [QSA]
+RewriteRule ^rate$ controller/rate.php? [QSA]
+
+RewriteRule ^login$ controller/login.php [L]
+RewriteRule ^register$ controller/register.php [L]
+RewriteRule ^user$ controller/user.php [QSA]
+RewriteRule ^change_password$ controller/change_password.php [QSA]
+
+RewriteRule ^login-admin$ controller/login-admin.php [L]
+RewriteRule ^register-admin$ controller/register-admin.php [L]
+
+
+RewriteRule ^subfood$ controller/subfood.php [QSA]
