@@ -12,6 +12,7 @@ class Customer
     private $_birth;
     private $_gender;
     private $_is_cancelled;
+    private $_date_create;
 
     public function __construct($data)
     {
@@ -286,6 +287,26 @@ class Customer
     public function set_is_cancelled($_is_cancelled)
     {
         $this->_is_cancelled = $_is_cancelled;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of _date_create
+     */ 
+    public function get_date_create()
+    {
+        return $this->_date_create;
+    }
+
+    /**
+     * Set the value of _date_create
+     *
+     * @return  self
+     */ 
+    public function set_date_create($_date_create)
+    {
+        $this->_date_create = $_date_create;
 
         return $this;
     }

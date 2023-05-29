@@ -25,14 +25,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     try {
         $trainer_id = $_GET['trainer_id'];
         // create db query
-        $query = $readDb->prepare("SELECT * from trainer WHERE id=:trainer_id");
-        $query->bindParam(':trainer_id', $trainer_id, PDO::PARAM_INT);
-        $query->execute();
-        $rowCount = $query->rowCount();
 
         $queryaa = $readDb->prepare('SELECT * FROM trainer WHERE id=:trainer_id');
         $queryaa->bindParam(':trainer_id', $trainer_id, PDO::PARAM_INT);
         $queryaa->execute();
+        $rowCount = $queryaa->rowCount();
 
         while ($rowaa = $queryaa->fetch(PDO::FETCH_ASSOC)) {
             $user = new Trainer(
@@ -41,7 +38,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
                     '_email' => $rowaa['email'],
                     '_phone' => $rowaa['phone'],
                     '_avatar' => $rowaa['avatar'],
-                    '_id' => $rowaa['id']
+                    '_gender' => $rowaa['gender'],
+                    '_id' => $rowaa['id'],
+                    '_certificate' => $rowaa['certificate'],
+                    '_specialize' => $rowaa['specialize'],
+                    '_experience' => $rowaa['experience'],
                 ]
             );
         }

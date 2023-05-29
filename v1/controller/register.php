@@ -78,18 +78,20 @@ try {
     if ($rowCount !== 0) {
         // set up response for username already exists
         $response = new Response();
-        $response->setHttpStatusCode(409);
+        $response->setHttpStatusCode(200);
         $response->setSuccess(false);
         $response->addMessage("Đăng ký thất bại, số điện thoại đã tồn tại");
         $response->send();
         exit;
     }
 
+    $date_create = date("Y-m-d");
     // create db query to create user
-    $query = $writeDB->prepare('INSERT into customer(phone, name, password) values (:phone, :name, :password)');
+    $query = $writeDB->prepare('INSERT into customer(phone, name, password, date_create) values (:phone, :name, :password, :date_create)');
     $query->bindParam(':phone', $phone, PDO::PARAM_STR);
     $query->bindParam(':name', $name, PDO::PARAM_STR);
     $query->bindParam(':password', $password, PDO::PARAM_STR);
+    $query->bindParam(':date_create', $date_create, PDO::PARAM_STR);
     $query->execute();
 
 

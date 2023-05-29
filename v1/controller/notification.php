@@ -192,7 +192,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $query->bindParam(':date_id', $date_id, PDO::PARAM_INT);
             $query->bindParam(':time_id', $time_id, PDO::PARAM_INT);
             $query->execute();
-            sendCloudMessaseToSmartPhone("", $content, ['id' => $writeDb->lastInsertId()]);
+            // sendCloudMessaseToSmartPhone("", $content, ['id' => $writeDb->lastInsertId()]);
 
         } else {
             $query = $writeDb->prepare('insert into notification (trainer_id, customer_id, address_id, class_id, start_date, end_date, time, day, content, is_read, is_customer, date_create, money, status, schedule_id, date_id, time_id) 
@@ -215,7 +215,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $query->bindParam(':date_id', $date_id, PDO::PARAM_INT);
             $query->bindParam(':time_id', $time_id, PDO::PARAM_INT);
             $query->execute();
-            sendCloudMessaseToSmartPhone("", $content, ['id' => $writeDb->lastInsertId()]);
+            // sendCloudMessaseToSmartPhone("", $content, ['id' => $writeDb->lastInsertId()]);
 
         }
         $content = "Lịch tập đã được gửi tới HLV ". $trainerName;
@@ -369,7 +369,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
 function sendCloudMessaseToSmartPhone($deviceToken = "", $message = "", $push_data = array()) {        
     $url = 'https://fcm.googleapis.com/fcm/send ';
-    $serverKey = "AAAAmmICaLE:APA91bFnJsoydFARfh0OwAddrbgQiLuQm9yAScLZVVXhkOZgNYblh46foumqQ7DV1f2mzofkVogkAEg_4tQKaL9sifjTXnMp53W6LsBtPCQQgPZbXNBFsh3qYq-vT8zbiq3dgDvItVcW"; 
+    $serverKey = "AAAAm3cTpmM:APA91bGLI1PPk03ZD5tSBpq6n1J8hqkorp3A05MdtxuK6BWIj2AP7dPdPzfCLdJihgyIIVQDLy5N5wgtKVC0_A0End2ag4NlCPEhYmQ1oA7u2o_IkI8av2tLdwEZpdxXio_KEQVYRHtf"; 
     $fields = array();
     $fields['data'] = $push_data;
     $notification = array();
@@ -377,9 +377,9 @@ function sendCloudMessaseToSmartPhone($deviceToken = "", $message = "", $push_da
     $notification['body'] = $message;
     $fields['notification'] = $notification;
     if (is_array($deviceToken)) {
-        $fields['registration_ids'] = "cXmJVlRGfEnurfNso2Ed2p:APA91bEDg1KrtFFnNStctbwDiWuFr1TAY42YiZ-xUYji3nRCaIkXFNXmm2VdG6-9kyMPYl6tvKkzgxuf71AHNxieTSdl91osBwJIHhybKw7D5iJCHYaU_SFCa7BZ7H3nl1_UyVPkM-K7";
+        $fields['registration_ids'] = "eCnwnwqLQEPEoyTejUyNMR:APA91bFE0UezdBTpeBpnjf6EKm_OnkOAmpRnegDxsqKnfA_N3Pk33U_gPGN3w5aqQAZ-cHPAQNHD3QX6NWaDtrXjpcGqPphWjiWtL7xRhVy9POxtN94-6cfa_y-e7l_OuLgFxUoKhTme";
     } else {
-        $fields['to'] = "cXmJVlRGfEnurfNso2Ed2p:APA91bEDg1KrtFFnNStctbwDiWuFr1TAY42YiZ-xUYji3nRCaIkXFNXmm2VdG6-9kyMPYl6tvKkzgxuf71AHNxieTSdl91osBwJIHhybKw7D5iJCHYaU_SFCa7BZ7H3nl1_UyVPkM-K7";
+        $fields['to'] = "eCnwnwqLQEPEoyTejUyNMR:APA91bFE0UezdBTpeBpnjf6EKm_OnkOAmpRnegDxsqKnfA_N3Pk33U_gPGN3w5aqQAZ-cHPAQNHD3QX6NWaDtrXjpcGqPphWjiWtL7xRhVy9POxtN94-6cfa_y-e7l_OuLgFxUoKhTme";
     }
     $headers = array(
         'Content-Type:application/json',

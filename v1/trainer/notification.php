@@ -112,7 +112,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query->bindParam(':date_id', $date_id, PDO::PARAM_INT);
         $query->bindParam(':time_id', $time_id, PDO::PARAM_INT);
         $query->execute();
-        sendCloudMessaseToSmartPhone("", $content, ['id' => $writeDb->lastInsertId()]);
+        // sendCloudMessaseToSmartPhone("", $content, ['id' => $writeDb->lastInsertId()]);
 
         $message = "Thông báo đã được gửi tới người tập";
         if ($status === '0') {
@@ -231,7 +231,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $query->bindParam(':date_id', $date_id, PDO::PARAM_INT);
         $query->bindParam(':time_id', $time_id, PDO::PARAM_INT);
         $query->execute();
-        sendCloudMessaseToSmartPhone("", $content, ['id' => $writeDb->lastInsertId()]);
+        // sendCloudMessaseToSmartPhone("", $content, ['id' => $writeDb->lastInsertId()]);
 
         $message = "Bạn đã đổi lịch dạy thành công.";
         if ($status === '0') {

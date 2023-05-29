@@ -106,7 +106,7 @@ try {
   if ($rowCount === 0) {
     // set up response for username already exists
     $response = new Response();
-    $response->setHttpStatusCode(409);
+    $response->setHttpStatusCode(200);
     $response->setSuccess(false);
     $response->addMessage("Tài khoản hoặc mật khẩu không chính xác");
     $response->send();

@@ -54,41 +54,57 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $excercise = trim($jsonData->excercise);
         $heart_rate = trim($jsonData->heart_rate);
         $customer_id = trim($jsonData->customer_id);
+        $date = trim($jsonData->date);
+        $currentDate = date('Y-m-d');
 
-        $date = date('Y-m-d');
-
+        $savedStep = 0;
         $firstQuery = $readDb->prepare("SELECT * from health WHERE customer_id=:customer_id AND date = :date");
-
         $firstQuery->bindParam(':customer_id', $customer_id, PDO::PARAM_INT);
         $firstQuery->bindParam(':date', $date, PDO::PARAM_STR);
         $firstQuery->execute();
         $rowCount = $firstQuery->rowCount();
+        while ($rowa = $firstQuery->fetch(PDO::FETCH_ASSOC)) {
+            $savedStep = $rowa['step'];
+            $savedSleep = $rowa['sleep'];
+
+        }
+
+        $query = $readDb->prepare("SELECT * from customer WHERE id=:customer_id");
+        $query->bindParam(':customer_id', $customer_id, PDO::PARAM_INT);
+        $query->execute();
+        while ($rowa = $query->fetch(PDO::FETCH_ASSOC)) {
+            $date_create = $rowa['date_create'];
+        }
 
         if ($rowCount === 0) {
-
-            $query1 = $writeDb->prepare('insert into health (customer_id, distance, sleep, step, excercise, heart_rate, date) 
-            values (:customer_id, :distance, :sleep, :walk_number, :excercise, :heart_rate, :date)');
-
-            $query1->bindParam(':customer_id', $customer_id, PDO::PARAM_INT);
-            $query1->bindParam(':distance', $distance, PDO::PARAM_STR);
-            $query1->bindParam(':sleep', $sleep, PDO::PARAM_STR);
-            $query1->bindParam(':walk_number', $walk_number, PDO::PARAM_STR);
-            $query1->bindParam(':excercise', $excercise, PDO::PARAM_STR);
-            $query1->bindParam(':heart_rate', $heart_rate, PDO::PARAM_STR);
-            $query1->bindParam(':customer_id', $customer_id, PDO::PARAM_INT);
-            $query1->bindParam(':date', $date, PDO::PARAM_STR);
-            $query1->execute();
+            if ($date_create <= $date) {
+                $query1 = $writeDb->prepare('insert into health (customer_id, distance, sleep, step, excercise, heart_rate, date) 
+                values (:customer_id, :distance, :sleep, :walk_number, :excercise, :heart_rate, :date)');
+                $query1->bindParam(':customer_id', $customer_id, PDO::PARAM_INT);
+                $query1->bindParam(':distance', $distance, PDO::PARAM_STR);
+                $query1->bindParam(':sleep', $sleep, PDO::PARAM_STR);
+                $query1->bindParam(':walk_number', $walk_number, PDO::PARAM_STR);
+                $query1->bindParam(':excercise', $excercise, PDO::PARAM_STR);
+                $query1->bindParam(':heart_rate', $heart_rate, PDO::PARAM_STR);
+                $query1->bindParam(':customer_id', $customer_id, PDO::PARAM_INT);
+                $query1->bindParam(':date', $date, PDO::PARAM_STR);
+                $query1->execute();
+            }
         } else {
-            $query1 = $writeDb->prepare('UPDATE health SET distance = :distance, sleep = :sleep, step = :walk_number, excercise = :excercise, heart_rate = :heart_rate WHERE customer_id=:customer_id AND date=:date');
-            $query1->bindParam(':customer_id', $customer_id, PDO::PARAM_INT);
-            $query1->bindParam(':distance', $distance, PDO::PARAM_STR);
-            $query1->bindParam(':sleep', $sleep, PDO::PARAM_STR);
-            $query1->bindParam(':walk_number', $walk_number, PDO::PARAM_STR);
-            $query1->bindParam(':excercise', $excercise, PDO::PARAM_STR);
-            $query1->bindParam(':heart_rate', $heart_rate, PDO::PARAM_STR);
-            $query1->bindParam(':customer_id', $customer_id, PDO::PARAM_INT);
-            $query1->bindParam(':date', $date, PDO::PARAM_STR);
-            $query1->execute();
+            if ($date_create <= $date) {
+                if ($date == $currentDate || $savedStep < $walk_number ) {
+                    $query1 = $writeDb->prepare('UPDATE health SET distance = :distance, sleep = :sleep, step = :walk_number, excercise = :excercise, heart_rate = :heart_rate WHERE customer_id=:customer_id AND date=:date');
+                    $query1->bindParam(':customer_id', $customer_id, PDO::PARAM_INT);
+                    $query1->bindParam(':distance', $distance, PDO::PARAM_STR);
+                    $query1->bindParam(':sleep', $sleep, PDO::PARAM_STR);
+                    $query1->bindParam(':walk_number', $walk_number, PDO::PARAM_STR);
+                    $query1->bindParam(':excercise', $excercise, PDO::PARAM_STR);
+                    $query1->bindParam(':heart_rate', $heart_rate, PDO::PARAM_STR);
+                    $query1->bindParam(':customer_id', $customer_id, PDO::PARAM_INT);
+                    $query1->bindParam(':date', $date, PDO::PARAM_STR);
+                    $query1->execute();
+                }
+            }
         }
 
         $returnData = array();
